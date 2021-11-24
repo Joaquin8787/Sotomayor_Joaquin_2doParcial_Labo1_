@@ -212,7 +212,6 @@ int ll_remove(LinkedList* this,int index) //ELIMINA EL NODO Y REACOMODA
     Node* nodeARemover;
 
     if(this != NULL && index >= 0 && index < ll_len(this)){
-    	nodeARemover = getNode(this,index);
     	if(index == 0){
     		nodeARemover = this->pFirstNode;
     		this->pFirstNode = getNode(this,index+1);
@@ -265,10 +264,12 @@ int ll_deleteLinkedList(LinkedList* this)
 {
     int returnAux = -1;
     if(this != NULL){
-    	if(ll_len(this) == 0){
+    	if(ll_len(this) == 0)
+    	{
     		returnAux = 1;
     	}
-    	else{
+    	else
+    	{
     	ll_clear(this);
     	returnAux = 0;
     	}
@@ -497,6 +498,13 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
 
 }
 
+
+/** \brief Asigna o modifica valores en los campos de los elementos en base al critero de la funcion pasada por parametro
+ * \param pList LinkedList* Puntero a la lista
+ * \param pFunc (*pFunc) Puntero a la funcion criterio
+ * \return int Retorna  (-1) Error: si el puntero a la listas es NULL
+                                ( 0) Si ok
+ */
 LinkedList* ll_map(LinkedList* this, int (*pFunc)(void*))
 {
 	if(this != NULL && pFunc != NULL)

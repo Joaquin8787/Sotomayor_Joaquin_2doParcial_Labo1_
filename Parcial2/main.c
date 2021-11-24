@@ -25,6 +25,7 @@ int main()
 
 	int option = 0;
 	int flag1=0;
+	int flag2=0;
 
 	char confirmar;
 	char sobreescribir;
@@ -48,6 +49,7 @@ int main()
 			}
 			if (controller_loadFromText("Datos.csv", listaEmpleados))
 			{
+				flag2 = 1;
 				printf("Se cargaron los datos de los libros con exito!!! \n");
 
 			} else
@@ -105,13 +107,22 @@ int main()
 			getchar();
 			break;
 		case 5:
-			if(controller_ll_map("mapeado.csv",listaEmpleados)){
-				printf("Descuentos aplicados con exito!!!\n");
-				flag1 = 1;
+			if(flag2)
+			{
+				if(controller_ll_map("mapeado.csv",listaEmpleados)){
+					printf("Descuentos aplicados con exito!!!\n");
+					flag2 = 0;
+					flag1 = 1;
+				}
+				else{
+					printf("No se pudieron aplicar los descuentos...\n");
+				}
 			}
-			else{
-				printf("No se pudieron aplicar los descuentos...\n");
+			else
+			{
+				printf("No es posible realizar la operacion, para aplicar los descuentos tiene que tener cargada la lista sin descuentos primero...\n");
 			}
+			getchar();
 			break;
 		case 6:
 			joaquin_getCaracter(&confirmar,"Esta seguro que quiere salir del programa? (s/n): ","ERROR!!! \n",'n','s',5);
