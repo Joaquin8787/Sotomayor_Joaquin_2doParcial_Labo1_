@@ -5,6 +5,12 @@
 #include "parser.h"
 #include "joaquin.h"
 
+/** \brief Libera el espacio en memoria apuntado por "this"
+ *
+ * \param this eLibro*
+ * \return int retorna 1 si pudo y 0 si no lo logro
+ *
+ */
 int libro_delete(eLibro* this)
 {
 	int retorno=0;
@@ -15,6 +21,12 @@ int libro_delete(eLibro* this)
 	}
 	return retorno;
 }
+
+/** \brief asigna un lugar de la memoria dinamica para un elemento de tipo eLibro y deja todos sus campos inicializados
+ *
+ * \return eLibro* retorna un puntero al lugar de la memoria asignado o devuelve NULL si no lo logro
+ *
+ */
 eLibro* libro_new(){
 	eLibro* nuevoLibro = NULL;
 	nuevoLibro = (eLibro*)malloc(sizeof(eLibro));
@@ -29,6 +41,16 @@ eLibro* libro_new(){
 	return nuevoLibro;
 }
 
+/** \brief reserva espacio de memoria dinamica para un elemento de tipo eLibro cargando en todos sus campos los datos pasados como parametros en formato de cadena de caracteres
+ *
+ * \param idStr char*
+ * \param tituloStr char*
+ * \param autorStr char*
+ * \param precio char*
+ * \param editorial char*
+ * \return eLibro* retorna un puntero al lugar de la memoria asignado o devuelve NULL si no lo logro
+ *
+ */
 eLibro* libro_newParametros(char* idStr,char* tituloStr,char* autorStr, char* precioStr,char* editorialStr){
 	eLibro* nuevoLibro = NULL;
 	if(idStr != NULL && tituloStr != NULL && autorStr != NULL && precioStr != NULL){
@@ -52,6 +74,14 @@ eLibro* libro_newParametros(char* idStr,char* tituloStr,char* autorStr, char* pr
 }
 
 //COMPARACION
+
+/** \brief Compara a los libros del LinkedList por su autor
+ *
+ * \param libro1 void*
+ * \param libro2 void*
+ * \return int retorna 1 si el primer valor es mas grande, -1 si el segundo es mas grande o 0 si son iguales
+ *
+ */
 int libro_compareByAutor(void* libro1, void* libro2)
 {
 	int retorno;
@@ -76,6 +106,12 @@ int libro_compareByAutor(void* libro1, void* libro2)
 //MAP
 //* Planeta: 20% (si el monto es mayor o igual a $300)
 //* SIGLO XXI EDITORES: 10% (si el monto es menor o igual a $200)
+
+/** \brief calcula y aplica un descuento a los precios de los libros en base a su editorial
+ *
+ * \param void* this
+ * \return int retorna 1 si pudo y -1 si no lo logro
+ */
 int calcularDescuento(void* this)
 {
 
@@ -102,14 +138,21 @@ int calcularDescuento(void* this)
 				libro_setPrecio(this,precio);
 			}
 		}
-
+	 retorno = 1;
 	}
 	return retorno;
 }
 
-//MOSTRAR auxLibro
+//MOSTRAR
+
+/** \brief Imprime por pantalla un unico libro
+ *
+ * \param this eLibro*
+ * \return int retorna 1 si pudo y 0 si no lo logro
+ *
+ */
 int mostrarUnLibro(eLibro* libro, int indice){
-	int retorno = 1;
+	int retorno = 0;
 	int id;
 	char titulo[128];
 	char autor[128];
@@ -123,7 +166,7 @@ int mostrarUnLibro(eLibro* libro, int indice){
 		libro_getPrecio(libro,&precio);
 		libro_getEditorial(libro,editorial);
 		printf("%-10d  %-50s                  %-20s         %-5d        %-5s \n",id,titulo,autor,precio,editorial);
-		retorno = 0;
+		retorno = 1;
 	}
 	return retorno;
 }
